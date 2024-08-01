@@ -74,6 +74,29 @@
    - Used for managing Kubernetes applications manifests.
    - Simplifies the deployment and management of complex applications by using Helm charts.
 
+4. **Redis as statefulset**:
+
+    **1. Redis as a StatefulSet**
+    - Redis is commonly deployed as a StatefulSet on Kubernetes because it is an in-memory data store, and persistent storage/volume is required to retain data.
+    - StatefulSets ensure that each instance(pod) of Redis has a unique identity(remain constant even during pod restarts or rescheduling) and stable storage(PV).
+
+    **2. Persistent Volume (PV)**
+    - Redis requires a persistent volume(storage) in our case because we are on AWS we mostly use Elastic Block Store (EBS) or Elastic File System (EFS) and For this example, we are using EBS as the persistent volume.
+
+    **3. Persistent Volume Claim (PVC) and Storage class**
+    - **Persistent Volume Claim (PVC):** 
+        - A request for storage by a user/application. When a PVC is created, Kubernetes looks for a suitable PV that matches the request or uses a Storage Class to dynamically provision one.
+    - **Storage Class:** define the type and parameters of storage for dynamic provisioning.
+        - A Storage Class in Kubernetes defines the type of storage (e.g., EBS, EFS) and parameters for dynamically provisioning storage.
+        - When a PVC references a Storage Class, Kubernetes uses that Storage Class to provision/create the storage/PV (e.g., EBS volume on AWS).
+
+    **4. Automatic Provisioning with EBS CSI contoller Plugin****
+        - When a PVC is created with a reference to the ebs-sc Storage Class, the EBS CSI contoller Plugin detects the PVC automatically and use SC info to provisions an EBS volume and attaches it to the Redis StatefulSet.
+        **ebs csi Controller Action:**
+        - The CSI (Container Storage Interface) provisioner/controller watches for PVCs.
+        - When a PVC is created, the controller detects it and looks at the specified Storage Class(for type and parameters). which SC to use is specified in PVC.
+        - The controller then provisions a PV based on the Storage Class parameters.
+        - For example, the `ebs.csi.aws.com` provisioner would interact with AWS to create an EBS volume.
 
 ---
 
