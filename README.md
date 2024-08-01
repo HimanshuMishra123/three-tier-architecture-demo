@@ -5,7 +5,7 @@ Stan's Robot Shop is a sample microservice application you can use as a sandbox 
 You can get more detailed information from my [blog post](https://www.instana.com/blog/stans-robot-shop-sample-microservice-application/) about this sample microservice application.
 
 This sample microservice application has been built using these technologies:
-- NodeJS ([Express](http://expressjs.com/))
+- NodeJS ([Express](http://expressjs.com/)) - for server side application
 - Java ([Spring Boot](https://spring.io/))
 - Python ([Flask](http://flask.pocoo.org))
 - Golang
@@ -15,7 +15,7 @@ This sample microservice application has been built using these technologies:
 - MySQL ([Maxmind](http://www.maxmind.com) data)
 - RabbitMQ
 - Nginx
-- AngularJS (1.x)
+- AngularJS (1.x)  - for client side application which frontend/UI
 
 The various services in the sample application already include all required Instana components installed and configured. The Instana components provide automatic instrumentation for complete end to end [tracing](https://docs.instana.io/core_concepts/tracing/), as well as complete visibility into time series metrics for all the technologies.
 
