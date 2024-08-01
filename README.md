@@ -9,13 +9,13 @@ This sample microservice application has been built using these technologies:
 - Java ([Spring Boot](https://spring.io/))
 - Python ([Flask](http://flask.pocoo.org))
 - Golang
-- PHP (Apache)
+- PHP (Apache)  - used here in ratings
 - MongoDB
 - Redis
 - MySQL ([Maxmind](http://www.maxmind.com) data)
-- RabbitMQ
+- RabbitMQ - for Advanced Message Queuing Protocol (AMQP)
 - Nginx
-- AngularJS (1.x)  - for client side application which frontend/UI
+- AngularJS (1.x)  - for client side application which frontend/UI - used here in web
 
 The various services in the sample application already include all required Instana components installed and configured. The Instana components provide automatic instrumentation for complete end to end [tracing](https://docs.instana.io/core_concepts/tracing/), as well as complete visibility into time series metrics for all the technologies.
 
