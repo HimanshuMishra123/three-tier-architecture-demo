@@ -86,10 +86,37 @@
     **3. Persistent Volume Claim (PVC) and Storage class**
     - **Persistent Volume Claim (PVC):** 
         - A request for storage by a user/application. When a PVC is created, Kubernetes looks for a suitable PV that matches the request or uses a Storage Class to dynamically provision one.
-    - **Storage Class:** define the type and parameters of storage for dynamic provisioning.
-        - A Storage Class in Kubernetes defines the type of storage (e.g., EBS, EFS) and parameters for dynamically provisioning storage.
-        - When a PVC references a Storage Class, Kubernetes uses that Storage Class to provision/create the storage/PV (e.g., EBS volume on AWS).
+        - while creating PVC, specify the desired Storage Class and storage requirements.
 
+               ```yaml
+               apiVersion: v1
+               kind: PersistentVolumeClaim
+               metadata:
+               name: my-pvc
+               spec:
+               accessModes:
+                  - ReadWriteOnce
+               storageClassName: my-storage-class
+               resources:
+                  requests:
+                     storage: 10Gi
+               ```
+
+    - **Storage Class:** (define the type and parameters of storage for dynamic provisioning)
+        - A Storage Class in Kubernetes defines the type of storage (e.g., EBS, EFS) and parameters for dynamically provisioning storage.
+        - When a PVC references a Storage Class, that Storage Class is used to provision/create the storage/PV (e.g., EBS volume on AWS).
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: my-storage-class
+provisioner: ebs.csi.aws.com
+parameters:
+  type: gp2
+  fsType: ext4
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+```
     **4. Automatic Provisioning with EBS CSI contoller Plugin****
         - When a PVC is created with a reference to the ebs-sc Storage Class, the EBS CSI contoller Plugin detects the PVC automatically and use SC info to provisions an EBS volume and attaches it to the Redis StatefulSet.
         **ebs csi Controller Action:**
