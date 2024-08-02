@@ -1,6 +1,7 @@
 ### Detailed Notes on "Demo of E-Commerce Three-Tier Application on AWS EKS"
 
 ---
+![Deploy an E Commerce Three Tier application on AWS EKS _ 8 Services and 2 Databases 10-15 screenshot (1)](https://github.com/user-attachments/assets/10679d98-2278-4857-b7ae-5f407fc63742)
 
 #### **Introduction to Three-Tier Architecture**
 1. **Overview**: 
@@ -31,6 +32,7 @@
 ---
 
 #### **Microservices Architecture**
+![Deploy an E Commerce Three Tier application on AWS EKS _ 8 Services and 2 Databases 25-9 screenshot](https://github.com/user-attachments/assets/6a91948e-a95e-40f9-819e-f403e3aad4d3)
 
 1. **Benefits of Microservices**:
    - **Modularity**: Each service can be developed, deployed, and scaled independently.
@@ -75,6 +77,9 @@
    - Simplifies the deployment and management of complex applications by using Helm charts.
 
 4. **for Redis as statefulset**:
+![Deploy an E Commerce Three Tier application on AWS EKS _ 8 Services and 2 Databases 33-40 screenshot](https://github.com/user-attachments/assets/4775d136-0c04-4431-abeb-7233c5162b64)
+![Deploy an E Commerce Three Tier application on AWS EKS _ 8 Services and 2 Databases 43-0 screenshot](https://github.com/user-attachments/assets/bd636365-b167-49bd-8720-3a374ad11439)
+
 
     **1. Redis as a StatefulSet**
     - Redis is commonly deployed as a StatefulSet on Kubernetes because it is an in-memory data store, and persistent storage/volume is required to retain data.
@@ -146,11 +151,12 @@
                   driver: ebs.csi.aws.com
                   volumeHandle: <volume-id>
                ```
-5. **Install chart Helm on K8s cluster**: Deploy application using helm on k8s cluster after all the steps from EKS folder.
+6. **Install chart Helm on K8s cluster**: Deploy application using helm on k8s cluster after all the steps from EKS folder.
 
 ---
 
 #### **High-Level Design Considerations**
+![Deploy an E Commerce Three Tier application on AWS EKS _ 8 Services and 2 Databases 19-1 screenshot](https://github.com/user-attachments/assets/8bff4a3e-a6d1-444e-914f-ab7a31939dd8)
 
 1. **Workflow Components**:
    - **User Workflow**: 
