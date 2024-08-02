@@ -74,7 +74,7 @@
    - Used for managing Kubernetes applications manifests.
    - Simplifies the deployment and management of complex applications by using Helm charts.
 
-4. **Redis as statefulset**:
+4. **for Redis as statefulset**:
 
     **1. Redis as a StatefulSet**
     - Redis is commonly deployed as a StatefulSet on Kubernetes because it is an in-memory data store, and persistent storage/volume is required to retain data.
@@ -128,7 +128,7 @@
         - For example, the `ebs.csi.aws.com` provisioner would interact with AWS to create an EBS volume.
         - A new PV is created and bound to the PVC
 
-      **PV Creation and Binding:** The provisioned PV is now bound to the PVC, making the storage available to the application.(below will be auto generated resource)
+      **PV Creation and Binding:** The provisioned `PV` is now bound to the `PVC`, making the storage available to the application.(below will be auto generated resource)
 
                ```yaml
                apiVersion: v1
@@ -146,6 +146,7 @@
                   driver: ebs.csi.aws.com
                   volumeHandle: <volume-id>
                ```
+5. **Install chart Helm on K8s cluster**: Deploy application using helm on k8s cluster after all the steps from EKS folder.
 
 ---
 
