@@ -92,11 +92,11 @@
                apiVersion: v1
                kind: PersistentVolumeClaim
                metadata:
-               name: my-pvc
+               name: redis-pvc
                spec:
                accessModes:
                   - ReadWriteOnce
-               storageClassName: my-storage-class
+               storageClassName: ebs-sc
                resources:
                   requests:
                      storage: 10Gi
@@ -105,18 +105,20 @@
     - **Storage Class:** (define the type and parameters of storage for dynamic provisioning)
         - A Storage Class in Kubernetes defines the type of storage (e.g., EBS, EFS) and parameters for dynamically provisioning storage.
         - When a PVC references a Storage Class, that Storage Class is used to provision/create the storage/PV (e.g., EBS volume on AWS).
-```yaml
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: my-storage-class
-provisioner: ebs.csi.aws.com
-parameters:
-  type: gp2
-  fsType: ext4
-reclaimPolicy: Retain
-volumeBindingMode: WaitForFirstConsumer
-```
+
+               ```yaml
+               apiVersion: storage.k8s.io/v1
+               kind: StorageClass
+               metadata:
+                  name: ebs-sc
+               provisioner: ebs.csi.aws.com
+               parameters:
+                  type: gp2
+                  fsType: ext4
+               reclaimPolicy: Retain
+               volumeBindingMode: WaitForFirstConsumer
+               ```
+
     **4. Automatic Provisioning with EBS CSI contoller Plugin****
         - When a PVC is created with a reference to the ebs-sc Storage Class, the EBS CSI contoller Plugin detects the PVC automatically and use SC info to provisions an EBS volume and attaches it to the Redis StatefulSet.
         **ebs csi Controller Action:**
@@ -124,6 +126,26 @@ volumeBindingMode: WaitForFirstConsumer
         - When a PVC is created, the controller detects it and looks at the specified Storage Class(for type and parameters). which SC to use is specified in PVC.
         - The controller then provisions a PV based on the Storage Class parameters.
         - For example, the `ebs.csi.aws.com` provisioner would interact with AWS to create an EBS volume.
+        - A new PV is created and bound to the PVC
+
+      **PV Creation and Binding:** The provisioned PV is now bound to the PVC, making the storage available to the application.(below will be auto generated resource)
+
+               ```yaml
+               apiVersion: v1
+               kind: PersistentVolume
+               metadata:
+               name: pv-redis
+               spec:
+               capacity:
+                  storage: 10Gi
+               accessModes:
+                  - ReadWriteOnce
+               persistentVolumeReclaimPolicy: Retain
+               storageClassName: ebs-sc
+               csi:
+                  driver: ebs.csi.aws.com
+                  volumeHandle: <volume-id>
+               ```
 
 ---
 
