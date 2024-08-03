@@ -82,7 +82,7 @@
 
 
     **1. Redis as a StatefulSet**
-    - Redis is commonly deployed as a StatefulSet.yaml(not as deployment.yaml) on Kubernetes because it is an in-memory data store, and persistent storage/volume is required to retain data. refer path for redis StatefulSet.YAML..  K8s/helm/templates/redis-statefulset.yaml
+    - Redis is commonly deployed as a StatefulSet.yaml(not as deployment.yaml) on Kubernetes because it is an in-memory data store, and persistent storage/volume is required to retain data. refer path for redis StatefulSet.YAML.. `K8s/helm/templates/redis-statefulset.yaml`
     - StatefulSets ensure that each instance(pod) of Redis has a unique identity(remain constant even during pod restarts or rescheduling) and stable storage(PV).
 
     **2. Persistent Volume (PV)**
