@@ -66,6 +66,8 @@
     eksctl create cluster --name demo-cluster-three-tier-1 --region us-east-1
     ```
  follow EKS folder for further steps..
+ 
+`Important note` : Redis component that we are deploying does not support fargate instances because we have granted net admin permissions or privilege to the redis component which fargate does not support and also we are using EBS as persistent volume that is also not supported by fargate. so we will be using EC2 for data plane components.
 
 2. **Kubernetes Resources**:
    - **Deployments**: Manages stateless applications.
@@ -85,7 +87,7 @@
     - Redis is commonly deployed as a StatefulSet.yaml(not as deployment.yaml) on Kubernetes because it is an in-memory data store, and persistent storage/volume is required to retain data. refer path for redis StatefulSet.YAML.. `K8s/helm/templates/redis-statefulset.yaml`
     - StatefulSets ensure that each instance(pod) of Redis has a unique identity(remain constant even during pod restarts or rescheduling) and stable storage(PV).
 
-    **2. Persistent Volume (PV)**
+    **2. Persistent Volume (PV)** 
     - Redis requires a persistent volume(storage) in our case because we are on AWS we mostly use Elastic Block Store (EBS) or Elastic File System (EFS) and For this example, we are using EBS as the persistent volume.
 
     **3. Persistent Volume Claim (PVC) and Storage class**
@@ -151,7 +153,7 @@
                   driver: ebs.csi.aws.com
                   volumeHandle: <volume-id>
                ```
-6. **Install chart Helm on K8s cluster**: Deploy application using helm on k8s cluster after all the steps from EKS folder.
+5. **Install Helm charts on K8s cluster**: Deploy application using helm on k8s cluster after all the steps from EKS folder.
 
 ---
 
